@@ -1460,9 +1460,15 @@ class AntStall : ModelTask() {
 
                             val ticketJson = JSONObject(ticketResponse)
                             if (!ticketJson.optBoolean("success")) {
+                                val failureText = pasteTicketFailureText(ticketJson)
+                                if (isPasteTicketLimitReached(failureText)) {
+                                    Log.stall("蚂蚁新村👍[今日罚单已贴完]")
+                                    Status.pasteTicketTime()
+                                    return
+                                }
                                 Log.error(
                                     TAG,
-                                    "pasteTicket.ticket err: ${ticketJson.optString("resultDesc")}"
+                                    "pasteTicket.ticket err: $failureText"
                                 )
                                 return
                             }
@@ -1482,6 +1488,22 @@ class AntStall : ModelTask() {
         } catch (t: Throwable) {
             Log.printStackTrace(TAG, "pasteTicket err:", t)
         }
+    }
+
+    private fun pasteTicketFailureText(ticketJson: JSONObject): String {
+        return sequenceOf(
+            ticketJson.optString("resultDesc"),
+            ticketJson.optString("resultMessage"),
+            ticketJson.optString("resultMsg"),
+            ticketJson.optString("desc"),
+            ticketJson.optString("memo")
+        ).firstOrNull { it.isNotBlank() } ?: ticketJson.toString()
+    }
+
+    private fun isPasteTicketLimitReached(resultDesc: String): Boolean {
+        return resultDesc.contains("贴罚单次数已用完") ||
+            resultDesc.contains("明天再来") ||
+            (resultDesc.contains("罚单") && resultDesc.contains("次数") && resultDesc.contains("用完"))
     }
 
     /**
