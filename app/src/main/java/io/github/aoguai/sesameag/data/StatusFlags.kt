@@ -34,6 +34,9 @@ object StatusFlags {
     /** 自定义 RPC 定时任务：每日计数前缀 */
     const val FLAG_CUSTOM_RPC_SCHEDULE_COUNT_PREFIX: String = "customRpcSchedule::"
 
+    /** 好友中心：今日已从支付宝侧同步好友快照 */
+    const val FLAG_FRIEND_CENTER_SYNC_TODAY: String = "friendCenter::syncToday"
+
     // ============================================================
     // Neverland（健康岛）
     // ============================================================
