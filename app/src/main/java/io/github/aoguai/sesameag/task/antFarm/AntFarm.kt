@@ -279,7 +279,6 @@ class AntFarm : ModelTask() {
     internal var enableChouchoule: BooleanModelField? = null
     internal var chouChouLeTrigger: TimeTriggerModelField? = null // 抽抽乐触发时间
     var autoExchange: BooleanModelField? = null
-    var doChouChouLeDonationTask: BooleanModelField? = null
     internal var exchangeDaysBeforeEndIp: IntegerModelField? = null  // IP 抽抽乐活动结束前兑换天数
     internal var autoExchangeList: SelectAndCountModelField? = null  // IP 抽抽乐自定义兑换列表
     private var listOrnaments: BooleanModelField? = null
@@ -893,14 +892,6 @@ class AntFarm : ModelTask() {
                 false
             ).withDesc("开启后不执行兑换，仅查询并提示商城中未拥有的装扮。需开启“装扮商城 | 开启”。").also {
                 onlyQueryNewOrnaments = it
-            })
-        modelFields.addField(
-            BooleanModelField(
-                "doChouChouLeDonationTask",
-                "装扮抽抽乐 | 公益捐赠任务",
-                false
-            ).withDesc("控制是否执行抽抽乐中的公益捐赠类任务；默认关闭以避免额外捐赠。需开启“装扮抽抽乐 | 开启”。").also {
-                doChouChouLeDonationTask = it
             })
         return modelFields
     }
