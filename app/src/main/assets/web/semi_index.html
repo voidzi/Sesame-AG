@@ -1741,7 +1741,7 @@
                 }
                 commitFieldChange(modelCode, fieldCode, newValueStr);
                 closeListSheet();
-                Toast.success("已保存列表设置");
+                Toast.success("已修改列表设置，退出时保存生效");
             };
 
             const toggleItem = (id, checked) => {
@@ -1882,7 +1882,7 @@
                 closeFriendSheet();
                 window.setTimeout(() => {
                     commitFieldChange(modelCode, fieldCode, JSON.stringify(newValue));
-                    Toast.success("已保存好友选择");
+                    Toast.success("已修改好友选择，退出时保存生效");
                 }, 0);
             };
 
