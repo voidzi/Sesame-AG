@@ -6,6 +6,11 @@ on:
     tags:
       - "[0-9]*-*"
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag (格式: VersionCode-VersionName，如 1-0.1.2)"
+        required: true
+        default: "1-0.1.2"
 
 env:
   CI: "true"
@@ -20,7 +25,7 @@ env:
   STAGING_DIR: app/build/outputs/apk/all
   ASSET_DIR: app/build/outputs/apk/release-assets
   ARTIFACT_PASSWORD: Sesame-AG
-  RELEASE_TAG_RAW: ${{ github.ref_name }}
+  RELEASE_TAG_RAW: ${{ github.event.inputs.release_tag || github.ref_name }}
   TARGET_SOURCE_BRANCH: dev
   TARGET_MODULE_REPO: Xposed-Modules-Repo/io.github.aoguai.sesameag
   PUBLISH_TO_XPOSED_REPO: "false"
